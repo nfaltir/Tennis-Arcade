@@ -1,21 +1,104 @@
 <html>
 
-some text here
+<title>Game</title>
 <canvas id="game-canvas" width="800" height="600"></canvas>
 
 <script>
 
   var canvas;
   var canvasContext;
+  var ballX = 50;
+  var ballY = 50;
+  var ballSpeedX = 10;
+  var ballSpeedY = 4;
+
+  var paddle1Y = 250;
+  const PADDLE_HEIGHT = 100;
+
+  // Calculate mouse position
+
+  function CalculateMousePos(evt) {
+    var rect = canvas.getBoundingClientRect();
+    var root = document.documentElement;
+    var mouseX = evt.clientX - rect.left - root.scrollLeft;
+    var mouseY = evt.clientY - rect.top - root.scrollTop;
+    return {
+      x: mouseX,
+      y: mouseY
+    };
+
+  }
+
+
+
 
 
   window.onload = function () {
-    console.log("Hello World!");
+
     canvas = document.getElementById('game-canvas');
     canvasContext = canvas.getContext('2d');
-    canvasContext.fillStyle = 'black';
-    canvasContext.fillRect(0, 0, canvas.width, canvas.height);
 
+    var framesPerSecond = 30;
+    setInterval(function () {
+      moveEverything();
+      drawEverything();
+    }, 1000 / framesPerSecond);
+
+    canvas.addEventListener('mousemove',
+      function (evt) {
+        var mousePos = CalculateMousePos(evt);
+        paddle1Y = mousePos.y;
+      });
+
+  }
+
+
+
+  function moveEverything() {
+
+
+    ballX = ballX + ballSpeedX;
+    ballY = ballY + ballSpeedY;
+    if (ballX < 0) {
+      ballSpeedX = -ballSpeedX;
+    }
+    if (ballX > canvas.width) {
+      ballSpeedX = -ballSpeedX;
+    }
+    if (ballY < 0) {
+      ballSpeedY = -ballSpeedY;
+    }
+    if (ballY > canvas.height)
+      ballSpeedY = -ballSpeedY;
+
+  }
+
+  //design shapes for tennis game
+  function drawEverything() {
+
+    colorShapes(0, 0, canvas.width, canvas.height, 'black');
+    colorShapes(0, paddle1Y, 10, 100, 'white');
+    colorCircle(ballX, ballY, 10, "white");
+
+
+
+
+
+  }
+
+  function colorCircle(centerX, centerY, radius, drawColor) {
+    //draws the ball
+    canvasContext.fillStyle = drawColor;
+    canvasContext.beginPath();
+    canvasContext.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
+    canvasContext.fill();
+
+  }
+
+  //clean code, color function
+  function colorShapes(leftX, topY, width, height, drawColor) {
+    canvasContext.fillStyle = drawColor;
+    canvasContext.fillRect(leftX, topY, width, height);
   }
 
 </script>
