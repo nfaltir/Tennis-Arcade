@@ -29,10 +29,6 @@
 
   }
 
-
-
-
-
   window.onload = function () {
 
     canvas = document.getElementById('game-canvas');
@@ -47,12 +43,20 @@
     canvas.addEventListener('mousemove',
       function (evt) {
         var mousePos = CalculateMousePos(evt);
-        paddle1Y = mousePos.y;
+        paddle1Y = mousePos.y - (PADDLE_HEIGHT / 2);
       });
+
+
 
   }
 
+  function ballReset() {
+    ballSpeedX = -ballSpeedX;
+    ballX = canvas.width / 2;
+    ballY = canvas.height / 2;
 
+
+  }
 
   function moveEverything() {
 
@@ -60,7 +64,7 @@
     ballX = ballX + ballSpeedX;
     ballY = ballY + ballSpeedY;
     if (ballX < 0) {
-      ballSpeedX = -ballSpeedX;
+      ballReset();
     }
     if (ballX > canvas.width) {
       ballSpeedX = -ballSpeedX;
