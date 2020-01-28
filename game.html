@@ -25,6 +25,11 @@
   var player1Score = 0;
   var player2Score = 0;
 
+  const WINNING_SCORE = 3;
+
+  var showingWinScreen = false;
+
+
   // Calculate mouse position
 
   function CalculateMousePos(evt) {
@@ -39,6 +44,14 @@
 
   }
 
+  function handleMouseClick(evt) {
+    if (showingWinScreen) {
+      player1Score = 0;
+      player2Score = 0;
+      showingWinScreen = false;
+    }
+  }
+
   window.onload = function () {
 
     canvas = document.getElementById('game-canvas');
@@ -49,6 +62,8 @@
       moveEverything();
       drawEverything();
     }, 1000 / framesPerSecond);
+
+    canvas.addEventListener('mousedown', handleMouseClick);
 
     canvas.addEventListener('mousemove',
       function (evt) {
@@ -61,6 +76,13 @@
   }
 
   function ballReset() {
+
+    if (player1Score >= WINNING_SCORE ||
+      player2Score >= WINNING_SCORE) {
+      player2Score = 0;
+      player1Score = 0;
+      showingWinScreen = true;
+    }
     ballSpeedX = -ballSpeedX;
     ballX = canvas.width / 2;
     ballY = canvas.height / 2;
@@ -78,6 +100,9 @@
   }
 
   function moveEverything() {
+    if (showingWinScreen) {
+      return;
+    }
 
     computerMovement();
 
@@ -89,10 +114,14 @@
       if (ballY > paddle1Y &&
         ballY < paddle1Y + PADDLE_HEIGHT) {
         ballSpeedX = -ballSpeedX;
+        var deltaY = ballY
+          - (paddle1Y + PADDLE_HEIGHT / 2);
+        ballSpeedY = deltaY * 0.35;
 
       } else {
-        ballReset();
         player2Score += 1;
+        ballReset();
+
       }
 
     }
@@ -101,9 +130,14 @@
         ballY < paddle2Y + PADDLE_HEIGHT) {
         ballSpeedX = -ballSpeedX;
 
+        var deltaY = ballY
+          - (paddle2Y + PADDLE_HEIGHT / 2);
+        ballSpeedY = deltaY * 0.35;
+
       } else {
-        ballReset();
         player1Score += 1;
+        ballReset();
+
       }
 
     }
@@ -119,6 +153,11 @@
   function drawEverything() {
 
     colorShapes(0, 0, canvas.width, canvas.height, 'black');
+    if (showingWinScreen) {
+      canvasContext.fillStyle = "white";
+      canvasContext.fillText("click to reset", 100, 100);
+      return;
+    }
     colorShapes(0, paddle1Y, PADDLE_THICKNESS, 100, 'white');
     colorShapes(canvas.width - PADDLE_THICKNESS, paddle2Y, PADDLE_THICKNESS, PADDLE_HEIGHT, 'yellow'); //right paddle
     colorCircle(ballX, ballY, 10, "white");
