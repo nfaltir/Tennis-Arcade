@@ -1,9 +1,8 @@
-<html>
-
-
 <title>Game</title>
 <link rel="stylesheet" type="text/css" href="styles.css">
-<canvas id="game-canvas" width="800" height="600"></canvas>
+<canvas id="game-canvas" width="800" height="600" style="position: absolute; top: 0px; left: 0px;
+ right: 0px; bottom: 0px; margin: auto; border:3px solid green;"></canvas>
+
 
 
 
@@ -79,8 +78,7 @@
 
     if (player1Score >= WINNING_SCORE ||
       player2Score >= WINNING_SCORE) {
-      player2Score = 0;
-      player1Score = 0;
+
       showingWinScreen = true;
     }
     ballSpeedX = -ballSpeedX;
@@ -149,15 +147,32 @@
 
   }
 
+  function drawNet() {
+    for (var i = 0; i < canvas.height; i += 40) {
+      colorShapes(canvas.width / 2 - 1, i, 2, 20, 'white');
+    }
+  }
+
   //design shapes for tennis game
   function drawEverything() {
 
     colorShapes(0, 0, canvas.width, canvas.height, 'black');
     if (showingWinScreen) {
       canvasContext.fillStyle = "white";
-      canvasContext.fillText("click to reset", 100, 100);
-      return;
+      if (player1Score >= WINNING_SCORE) {
+        canvasContext.fillText("left player won!", 250, 200);
+      } else if (player2Score >= WINNING_SCORE) {
+        canvasContext.fillText("Right player won!", 250, 200);
+      }
+
+
+      canvasContext.fillText("Click to continue!", 500, 200);
+
+
     }
+
+    drawNet();
+
     colorShapes(0, paddle1Y, PADDLE_THICKNESS, 100, 'white');
     colorShapes(canvas.width - PADDLE_THICKNESS, paddle2Y, PADDLE_THICKNESS, PADDLE_HEIGHT, 'yellow'); //right paddle
     colorCircle(ballX, ballY, 10, "white");
@@ -184,12 +199,3 @@
   }
 
 </script>
-
-</div>
-
-
-
-
-
-
-</html>
