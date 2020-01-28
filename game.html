@@ -22,6 +22,9 @@
   const PADDLE_THICKNESS = 10;
   const PADDLE_HEIGHT = 100;
 
+  var player1Score = 0;
+  var player2Score = 0;
+
   // Calculate mouse position
 
   function CalculateMousePos(evt) {
@@ -50,7 +53,7 @@
     canvas.addEventListener('mousemove',
       function (evt) {
         var mousePos = CalculateMousePos(evt);
-        paddle2Y = mousePos.y - (PADDLE_HEIGHT / 2);
+        paddle1Y = mousePos.y - (PADDLE_HEIGHT / 2);
       });
 
 
@@ -65,16 +68,44 @@
 
   }
 
+  function computerMovement() {
+    var paddle2YCenter = paddle2Y + (PADDLE_HEIGHT / 2);
+    if (paddle2YCenter < ballY - 35) {
+      paddle2Y += 6;
+    } else if (paddle2YCenter > ballY + 35) {
+      paddle2Y -= 6;
+    }
+  }
+
   function moveEverything() {
 
+    computerMovement();
 
-    ballX = ballX + ballSpeedX;
-    ballY = ballY + ballSpeedY;
+    ballX += ballSpeedX;
+    ballY += ballSpeedY;
+
+
     if (ballX < 0) {
-      ballReset();
+      if (ballY > paddle1Y &&
+        ballY < paddle1Y + PADDLE_HEIGHT) {
+        ballSpeedX = -ballSpeedX;
+
+      } else {
+        ballReset();
+        player2Score += 1;
+      }
+
     }
     if (ballX > canvas.width) {
-      ballSpeedX = -ballSpeedX;
+      if (ballY > paddle2Y &&
+        ballY < paddle2Y + PADDLE_HEIGHT) {
+        ballSpeedX = -ballSpeedX;
+
+      } else {
+        ballReset();
+        player1Score += 1;
+      }
+
     }
     if (ballY < 0) {
       ballSpeedY = -ballSpeedY;
@@ -91,6 +122,10 @@
     colorShapes(0, paddle1Y, PADDLE_THICKNESS, 100, 'white');
     colorShapes(canvas.width - PADDLE_THICKNESS, paddle2Y, PADDLE_THICKNESS, PADDLE_HEIGHT, 'yellow'); //right paddle
     colorCircle(ballX, ballY, 10, "white");
+
+    //score game
+    canvasContext.fillText(player1Score, 100, 100);
+    canvasContext.fillText(player2Score, canvas.width - 100, 100);
 
   }
 
