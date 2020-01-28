@@ -1,12 +1,12 @@
 <title>Game</title>
 <link rel="stylesheet" type="text/css" href="styles.css">
 <canvas id="game-canvas" width="800" height="600" style="position: absolute; top: 0px; left: 0px;
- right: 0px; bottom: 0px; margin: auto; border:3px solid green;"></canvas>
+ right: 0px; bottom: 0px; margin: auto; border:3px solid #5b5656;"></canvas>
 
 
 
 
-
+<div class="headA">Tennis Game</div>
 <script>
 
   var canvas;
@@ -24,7 +24,7 @@
   var player1Score = 0;
   var player2Score = 0;
 
-  const WINNING_SCORE = 3;
+  const WINNING_SCORE = 1;
 
   var showingWinScreen = false;
 
@@ -55,6 +55,7 @@
 
     canvas = document.getElementById('game-canvas');
     canvasContext = canvas.getContext('2d');
+    canvasContext.font = "30px Arial";
 
     var framesPerSecond = 30;
     setInterval(function () {
@@ -156,25 +157,25 @@
   //design shapes for tennis game
   function drawEverything() {
 
-    colorShapes(0, 0, canvas.width, canvas.height, 'black');
+    colorShapes(0, 0, canvas.width, canvas.height, '#94d3ac');
     if (showingWinScreen) {
       canvasContext.fillStyle = "white";
       if (player1Score >= WINNING_SCORE) {
         canvasContext.fillText("left player won!", 250, 200);
       } else if (player2Score >= WINNING_SCORE) {
-        canvasContext.fillText("Right player won!", 250, 200);
+        canvasContext.fillText("Right player won!", 50, 200);
       }
 
 
-      canvasContext.fillText("Click to continue!", 500, 200);
+      canvasContext.fillText("Click to continue!", 525, 200);
 
 
     }
 
     drawNet();
 
-    colorShapes(0, paddle1Y, PADDLE_THICKNESS, 100, 'white');
-    colorShapes(canvas.width - PADDLE_THICKNESS, paddle2Y, PADDLE_THICKNESS, PADDLE_HEIGHT, 'yellow'); //right paddle
+    colorShapes(0, paddle1Y, PADDLE_THICKNESS, 100, '#f17362');
+    colorShapes(canvas.width - PADDLE_THICKNESS, paddle2Y, PADDLE_THICKNESS, PADDLE_HEIGHT, '#f17362'); //right paddle
     colorCircle(ballX, ballY, 10, "white");
 
     //score game
@@ -199,3 +200,6 @@
   }
 
 </script>
+
+
+</html>
