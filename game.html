@@ -1,7 +1,12 @@
 <html>
 
+
 <title>Game</title>
+<link rel="stylesheet" type="text/css" href="styles.css">
 <canvas id="game-canvas" width="800" height="600"></canvas>
+
+
+
 
 <script>
 
@@ -13,6 +18,8 @@
   var ballSpeedY = 4;
 
   var paddle1Y = 250;
+  var paddle2Y = 250;
+  const PADDLE_THICKNESS = 10;
   const PADDLE_HEIGHT = 100;
 
   // Calculate mouse position
@@ -43,7 +50,7 @@
     canvas.addEventListener('mousemove',
       function (evt) {
         var mousePos = CalculateMousePos(evt);
-        paddle1Y = mousePos.y - (PADDLE_HEIGHT / 2);
+        paddle2Y = mousePos.y - (PADDLE_HEIGHT / 2);
       });
 
 
@@ -81,12 +88,9 @@
   function drawEverything() {
 
     colorShapes(0, 0, canvas.width, canvas.height, 'black');
-    colorShapes(0, paddle1Y, 10, 100, 'white');
+    colorShapes(0, paddle1Y, PADDLE_THICKNESS, 100, 'white');
+    colorShapes(canvas.width - PADDLE_THICKNESS, paddle2Y, PADDLE_THICKNESS, PADDLE_HEIGHT, 'yellow'); //right paddle
     colorCircle(ballX, ballY, 10, "white");
-
-
-
-
 
   }
 
@@ -107,7 +111,7 @@
 
 </script>
 
-
+</div>
 
 
 
