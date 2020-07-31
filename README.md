@@ -1,22 +1,19 @@
-:tennis: Tennis Arcade Game
-============================
+Run Game :tennis:
+=================
+1. clone repo
+2. right `click` on html file to open with Live Server (assuming you are using vscode)
+3. if you are not using vscode, open the html file to run locally
 
-Tool Box (libraries)
--------------
-1. HTML
-2. CSS
-3. Bootstrap
-4. Google fonts
-5. Font awesome
-3. JavaScript :pineapple:
+Libraries
+==============
+1. Bootstrap
+2. font awesome
+3. No packages (vanilla js :icecream: )
 
 
-Vanilla Concepts
------------------------
-1. Script Canvas
-2. JavaScript functions
-3. user movement
-4. canvas geometry & configuration
+Output
+==============
 
+![githublarge](game-img.PNG)
 
 
