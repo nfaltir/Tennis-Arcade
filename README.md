@@ -16,4 +16,8 @@ Output
 
 ![githublarge](game-img.PNG)
 
+Needed Updates
+==================
+1. develop mobile version
+
 
